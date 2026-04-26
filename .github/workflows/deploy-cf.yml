@@ -45,4 +45,5 @@ jobs:
             --template-file infra/iam-user-group.yml \
             --stack-name iam-group-and-user \
             --capabilities CAPABILITY_NAMED_IAM \
+            --role-arn arn:aws:iam::809466761362:role/CloudFormationExecutionRole \
             --no-fail-on-empty-changeset
