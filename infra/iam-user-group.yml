@@ -27,6 +27,7 @@ Resources:
         - Key: Team
           Value: Platform
 
+
 Outputs:
   UserName:
     Value: !Ref IAMUser
