@@ -9,38 +9,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  # Build
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      artifact-name: java-app
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: maven-${{ hashFiles('**/pom.xml') }}
-
-      - name: Setting up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Build app
-        run: mvn clean verify -DskipTests
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: java-app
-          path: target
-
+  call-build:
+    uses: ./github/workflowa/reusable-java-build.yml
+    with:
+      maven-command: "mvn clean verify"
+      artifact-path: "target"
 
   # Sonar Scan
   sonar-scan:
