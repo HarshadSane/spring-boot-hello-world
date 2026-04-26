@@ -36,12 +36,12 @@ jobs:
       - name: Validate CloudFormation
         run: |
           aws cloudformation validate-template \
-            --template-body file://infra/iam-user-group.yaml
+            --template-body infra/iam-user-group.yml
 
       # 🚀 Deploy stack
       - name: Deploy Stack
         run: |
           aws cloudformation deploy \
-            --template-file infra/iam-user-group.yaml \
+            --template-file infra/iam-user-group.yml \
             --stack-name iam-group-and-user \
             --no-fail-on-empty-changeset
