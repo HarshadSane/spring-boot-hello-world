@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    uses: .github/workflows/reusable-java-build.yml
+    uses: ./.github/workflows/reusable-java-build.yml
     with:
       maven-command: "mvn clean verify"
       artifact-path: "target"
