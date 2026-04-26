@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    uses: ./github/workflowa/reusable-java-build.yml
+    uses: .github/workflows/reusable-java-build.yml
     with:
       maven-command: "mvn clean package -DskipTests"
       artifact-path: "target/*.jar"
