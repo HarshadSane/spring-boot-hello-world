@@ -25,20 +25,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 🔐 Authenticate to AWS (OIDC)
+      # Authenticate to AWS (OIDC)
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      # 🔍 Validate template
+      # Validate template
       - name: Validate CloudFormation
         run: |
           aws cloudformation validate-template \
             --template-body infra/iam-user-group.yml
 
-      # 🚀 Deploy stack
+      # Deploy stack
       - name: Deploy Stack
         run: |
           aws cloudformation deploy \
