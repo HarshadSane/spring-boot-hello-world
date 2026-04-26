@@ -1,0 +1,42 @@
+name: Reusable Java Build
+
+on:
+  workflow_call:
+    inputs:
+      maven-command:
+        required: true
+        type: string
+      artifact-path:
+        required: true
+        type: string
+
+jobs:
+  # Build Job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: maven-${{ hashFiles('**/pom.xml') }}
+
+      - name: Setting up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Maven Command
+        run: ${{ inputs.maven-command }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-app
+          path: ${{ inputs.artifact-path }}
+
