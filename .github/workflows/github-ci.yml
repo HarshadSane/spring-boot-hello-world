@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: hello-world-java
 
 jobs:
-  call-build:
+  build:
     uses: ./github/workflowa/reusable-java-build.yml
     with:
       maven-command: "mvn clean package -DskipTests"

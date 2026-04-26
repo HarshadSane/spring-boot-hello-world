@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  call-build:
+  build:
     uses: ./github/workflowa/reusable-java-build.yml
     with:
       maven-command: "mvn clean verify"
