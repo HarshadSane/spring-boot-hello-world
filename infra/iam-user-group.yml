@@ -1,0 +1,37 @@
+Parameters:
+  UserName:
+    Type: String
+    Default: default-user
+
+Resources:
+  Group:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: Contractors
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      Path: /
+
+  IAMUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref UserName
+      Groups:
+        - !Ref Group
+      Path: /
+      Tags:
+        - Key: Environment
+          Value: Dev
+        - Key: Team
+          Value: Platform
+
+Outputs:
+  UserName:
+    Value: !Ref IAMUser
+    Description: IAM User created
+
+  GroupName:
+    Value: !Ref Group
+    Description: IAM Group
