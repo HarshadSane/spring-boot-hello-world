@@ -2,37 +2,28 @@ name: CI - SonarCloud Scan
 
 on:
   push:
-    branches: [ "main", "feature/*" ]
+    branches:
+      - 'feature/**'
+      - 'main'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'main'
 
 jobs:
-  build:
-    uses: ./.github/workflows/reusable-java-build.yml
-    with:
-      maven-command: "mvn clean verify"
-      artifact-path: "target"
-
   # Sonar Scan
   sonar-scan:
     runs-on: ubuntu-latest
-    needs: build
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Download compiled artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: java-app
-          path: target
 
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
@@ -44,7 +35,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn sonar:sonar \
+          mvn clean verify sonar:sonar \
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }} \
             -Dsonar.organization=${{ vars.SONAR_ORG_KEY }} \
             -Dsonar.host.url=https://sonarcloud.io \
