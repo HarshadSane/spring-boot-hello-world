@@ -2,30 +2,23 @@ name: "CodeQL Java Analysis"
 
 on:
   push:
-    branches: [ "main", "feature/*" ]
+    branches:
+      - 'main'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'main'
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
-      actions: read
       contents: read
 
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Setting up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      # Initializes CodeQL tools
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
